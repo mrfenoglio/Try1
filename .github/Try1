@@ -1,0 +1,32 @@
+import pandas as pd
+
+# Replace 'your_file.csv' with the path to your CSV file
+file_path ="C:/Users/pfeno/Downloads/Portfolio_Positions_Jun-08-2025.csv"
+df = pd.read_csv(file_path)
+df["Average Cost Basis"]= df["Average Cost Basis"]*2
+
+
+print(df.head())
+
+import pandas as pd
+import re
+
+file_path = "C:/Users/pfeno/Downloads/Portfolio_Positions_Jun-08-2025.csv"
+df = pd.read_csv(file_path)
+
+# Replace 'YourColumn' with the actual column name
+def extract_between_spaces(text):
+    parts = str(text).split(' ')
+    if len(parts) >=4:
+        # Return the second, third, and fourth parts
+        return parts[1] + ' ' + parts[2] + ' ' + parts[3]
+    return text
+    
+df['Description'] = df['Description'].apply(extract_between_spaces)
+df['Description'] = pd.to_datetime(df['Description'], errors='coerce')
+
+# Sort by 'Description' column
+df = df.sort_values(by='Description')
+df.to_csv("C:/Users/pfeno/Downloads/Portfolio_Positions_Sorted.csv", index=False)
+
+print(df.head())
